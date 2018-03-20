@@ -1,21 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   filler.h                                           :+:      :+:    :+:   */
+/*   read_new_field.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vkovsh <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/03/19 13:04:07 by vkovsh            #+#    #+#             */
-/*   Updated: 2018/03/19 19:22:04 by vkovsh           ###   ########.fr       */
+/*   Created: 2018/03/20 13:22:55 by vkovsh            #+#    #+#             */
+/*   Updated: 2018/03/20 13:23:04 by vkovsh           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FILLER_H
-# define FILLER_H
-# include "data.h"
+#include "parser.h"
 
-void		parse_output(t_list *lst, t_filler *filler);
-void		read_from_output(t_list **output);
-t_filler	new_filler(void);
-t_point		find_point(t_filler f);
-#endif
+void		read_new_field(t_list **lst, t_filler *filler)
+{
+	int		i;
+	t_list	*tmp;
+	char	*str_cpy;
+
+	tmp = *lst;
+	i = -1;
+	while (++i < filler->rows)
+	{
+		str_cpy = (char *)(tmp->content) + 4;
+		ft_memmove((filler->field)[i], str_cpy, filler->cols);
+		tmp = tmp->next;
+	}
+	*lst = tmp;
+}

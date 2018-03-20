@@ -13,15 +13,28 @@
 #include "filler.h"
 #include <fcntl.h>
 
-int			main(void)
+int				main(void)
 {
-	int		fd;
-	t_list	*lst;
+	t_filler	f;
+	t_list		*lst;
+	t_point		p;
 
 	lst = NULL;
-	read_from_output(&lst);
-	parse_output(lst);
+	f = new_filler();
+	f.is_game = TRUE;
 	while (1)
-		ft_printf("%d %d\n", 1, 1);
+	{
+		read_from_output(&lst);
+		parse_output(lst, &f);
+		if (f.is_turn == TRUE)
+		{
+			f.is_turn = FALSE;
+			p = find_point(f);
+			ft_printf("%d %d\n", p.x, p.y);
+		}
+		else
+			f.is_turn = TRUE;
+	}
+	//ft_printf("x = %[ff0000]d, y = %[ff0000]d\n", p.x, p.y);
 	return (0);
 }
