@@ -6,7 +6,7 @@
 #    By: vkovsh <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/03/19 13:07:53 by vkovsh            #+#    #+#              #
-#    Updated: 2018/03/19 15:19:23 by vkovsh           ###   ########.fr        #
+#    Updated: 2018/03/20 18:52:35 by vkovsh           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -56,12 +56,12 @@ $(OBJ_PATH)%.o: $(SRC_PATH)%.c
 	@echo "Linking" [ $< ]
 
 $(OBJ_PATH)%.o: $(PARSER_PATH)%.c
-	mkdir -p $(OBJ_PATH)
+	@mkdir -p $(OBJ_PATH)
 	@$(CC) $(CC_FLAGS) -o $@ -c $< $(INC)
 	@echo "Linking" [ $< ]
 
 $(OBJ_PATH)%.o: $(BOT_PATH)%.c
-	mkdir -p $(OBJ_PATH)
+	@mkdir -p $(OBJ_PATH)
 	@$(CC) $(CC_FLAGS) -o $@ -c $< $(INC)
 	@echo "Linking" [ $< ]
 
