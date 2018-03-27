@@ -1,21 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   new_filler.c                                       :+:      :+:    :+:   */
+/*   free_token.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vkovsh <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/03/20 14:16:34 by vkovsh            #+#    #+#             */
-/*   Updated: 2018/03/20 14:16:36 by vkovsh           ###   ########.fr       */
+/*   Created: 2018/03/27 14:16:01 by vkovsh            #+#    #+#             */
+/*   Updated: 2018/03/27 14:16:03 by vkovsh           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "data.h"
+#include "filler.h"
 
-t_filler		new_filler(void)
+void		free_token(t_token *token, int offset)
 {
-	t_filler	f;
+	int		i;
+	char	*str;
 
-	ft_memset((void *)(&f), 0x0, sizeof(f));
-	return (f);
+	if (!token->data)
+		return ;
+	i = 0;
+	while (i < token->height)
+	{
+		str = token->data[i] - offset;
+		ft_strdel(&str);
+		i++;
+	}
+	ft_memdel((void **)&token->data);
 }

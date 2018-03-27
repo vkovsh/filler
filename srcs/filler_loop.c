@@ -1,29 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   read_from_output.c                                 :+:      :+:    :+:   */
+/*   filler_loop.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vkovsh <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/03/19 14:58:33 by vkovsh            #+#    #+#             */
-/*   Updated: 2018/03/19 14:58:36 by vkovsh           ###   ########.fr       */
+/*   Created: 2018/03/27 14:29:09 by vkovsh            #+#    #+#             */
+/*   Updated: 2018/03/27 14:29:11 by vkovsh           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parser.h"
+#include "filler.h"
+#include "fcntl.h"
 
-void		read_from_output(t_list **output)
+void		filler_loop(t_filler filler)
 {
 	char	*line;
-	t_list	*new;
+	int		res;
 
 	line = NULL;
-	new = NULL;
-	while(get_next_line(0, &line) == 1)
+	while ((res = get_next_line(0, &line)) != -1)
 	{
-		new = ft_lstnew(line, ft_strlen(line));
-		ft_lstadd(output, new);
+
+		if (!line)
+			continue ;
+		if (!ft_strncmp(line, "Plateau ", 8))
+		{
+			read_token(line, 4, &(filler.board));
+			if (!filler.inited)
+				init(&filler);
+		}
+		else if (!ft_strncmp(line, "Piece ", 6))
+		{
+			read_token(line, 0, &(filler.token));
+			place(filler);
+		}
 		ft_strdel(&line);
 	}
-	ft_lstrev(&(*output));
 }

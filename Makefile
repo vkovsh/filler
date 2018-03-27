@@ -6,7 +6,7 @@
 #    By: vkovsh <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/03/19 13:07:53 by vkovsh            #+#    #+#              #
-#    Updated: 2018/03/20 18:52:35 by vkovsh           ###   ########.fr        #
+#    Updated: 2018/03/27 14:35:57 by vkovsh           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,8 +16,6 @@ CC					=	gcc
 CC_FLAGS			=	-Wall -Werror -Wextra
 
 SRC_PATH			=	./srcs/
-PARSER_PATH			=	$(SRC_PATH)parser/
-BOT_PATH			=	$(SRC_PATH)filler_bot/
 
 INC_PATH			=	./includes/ $(LIBFTPRINTF_PATH)includes/ $(LIBFT_PATH)includes/
 OBJ_PATH			=	./obj/
@@ -29,19 +27,14 @@ OBJ					=	$(addprefix $(OBJ_PATH),$(OBJ_NAME))
 INC					=	$(addprefix -I, $(INC_PATH))
 
 OBJ_NAME			=	$(SRC_NAME:.c=.o)
-OBJ_NAME			+=	$(PARSER_NAME:.c=.o)
-OBJ_NAME			+=	$(BOT_NAME:.c=.o)
 
-SRC_NAME			=	main.c 			\
-						new_filler.c
-
-PARSER_NAME			=	init_filler.c 		\
-						parse_output.c 		\
-						read_from_output.c 	\
-						read_new_field.c 	\
-						read_new_piece.c
-
-BOT_NAME			=	filler_bot.c
+SRC_NAME			=	closest.c 		\
+						filler.c		\
+						place.c 		\
+						read_token.c 	\
+						free_token.c	\
+						filler_loop.c	\
+						init.c
 
 all: $(NAME)
 
@@ -51,16 +44,6 @@ $(NAME): $(OBJ)
 	@echo "Compiling" [ $(NAME) ]
 
 $(OBJ_PATH)%.o: $(SRC_PATH)%.c
-	@mkdir -p $(OBJ_PATH)
-	@$(CC) $(CC_FLAGS) -o $@ -c $< $(INC)
-	@echo "Linking" [ $< ]
-
-$(OBJ_PATH)%.o: $(PARSER_PATH)%.c
-	@mkdir -p $(OBJ_PATH)
-	@$(CC) $(CC_FLAGS) -o $@ -c $< $(INC)
-	@echo "Linking" [ $< ]
-
-$(OBJ_PATH)%.o: $(BOT_PATH)%.c
 	@mkdir -p $(OBJ_PATH)
 	@$(CC) $(CC_FLAGS) -o $@ -c $< $(INC)
 	@echo "Linking" [ $< ]
